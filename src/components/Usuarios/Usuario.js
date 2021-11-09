@@ -39,9 +39,12 @@ export default function Usuario({Usuarios}){
     }
 
     const Clickenopciones=tabla=>{
+        document.getElementById('ListaUs').style.display='none';
         setUser(tabla);
         setControl(ListaUsers.indexOf(tabla))
         revisarrango(tabla)
+        Acomodarlista(tabla)
+        
     }
 
 
@@ -74,11 +77,21 @@ export default function Usuario({Usuarios}){
         }
     }
     
-    
+
+    document.addEventListener('click', function(event){
+        if(event.target.id!="Usuarios"){
+            document.getElementById('ListaUs').style.display='none';
+        }
+        else{
+            document.getElementById('ListaUs').style.display='list-item';
+        }
+    })
+
+
     return(
         <div>
-        <input name="usuarios" type="search" placeholder="Search" onChange={handleInputChange} onKeyDown={Teclapresionada}   value={User}></input>
-        <ul>
+        <input id="Usuarios" name="usuarios" type="search" placeholder="Search" onChange={handleInputChange} onKeyDown={Teclapresionada}   value={User}></input>
+        <ul id="ListaUs">
             {ListaUsers.map((asd,i)=>{
                 return(
                     <li className='Opciones' key={asd} onClick={()=>Clickenopciones(asd)} value={asd}  style={{background: i===ControlLista ? "aquamarine":"white"}}>{asd} </li>

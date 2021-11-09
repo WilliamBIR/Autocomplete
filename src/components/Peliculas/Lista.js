@@ -21,6 +21,7 @@ export default function Lista({Peliculas}){
         }
         else{
             setEmoji('🔍')
+            setBuscador(e.target.value)
             Acomodarlista(e.target.value)
         }
     }
@@ -54,8 +55,10 @@ export default function Lista({Peliculas}){
     }
 
     const Clickenopciones=tabla=>{
+        document.getElementById('Lista').style.display='none';
         setBuscador(tabla);
         setControl(Listafil.indexOf(tabla))
+        Acomodarlista(tabla)
     }
     const Cambiarlimite=(e)=>{
         setLimite(e.target.value)
@@ -71,9 +74,9 @@ export default function Lista({Peliculas}){
         }   
         else{ 
             Peliculas.map(Peli=>{
-                if(Peli.id.includes(buscando) ||Peli.title.includes(buscando) || Peli.rank.includes(buscando)){
+                if(Peli.id===buscando ||Peli.title===buscando || Peli.rank===buscando){
                     
-                    if(RangoUsuario=='Admin'){
+                    if(RangoUsuario==='Admin'){
                     setAlerta('Movie Found, Title: '+Peli.title+' Rank: '+Peli.rank+' Id:'+Peli.id+' Calif: '+Peli.calif)
                     setEmoji('😎')
                     }
@@ -117,9 +120,20 @@ export default function Lista({Peliculas}){
         }
     }
 
+    document.addEventListener('click', function(event){
+        if(event.target.id!=="Buscando"){
+            document.getElementById('Lista').style.display='none';
+        }
+        else{
+            document.getElementById('Lista').style.display='list-item';
+        }
+        console.log(buscando)
+
+    })
+
     return(
         <div>
-        <input name="buscando" type="search" placeholder="Search" onChange={handleInputChange}  onKeyDown={Teclapresionada}  value={buscando}></input>
+        <input id="Buscando" name="buscando" type="search" placeholder="Search" onChange={handleInputChange}  onKeyDown={Teclapresionada}  value={buscando}></input>
         <select onChange={Cambiarlimite}>
             <option value={4}>4</option>
             <option value={5}>5</option>
@@ -130,10 +144,10 @@ export default function Lista({Peliculas}){
         </select>
         <button onClick={()=>Alertaalsubir()}>Buscar</button>
 
-        <ul>
+        <ul id="Lista">
             {Listafil.map((asd,i)=>{
                 return(
-                    <li key={asd}   onClick={()=>Clickenopciones(asd)} value={asd} style={{background: i===ControlLista ? "aquamarine":"white"}}>{asd} </li>
+                    <li key={asd}   onClick={()=>Clickenopciones(asd)} value={asd} style={{background: i===ControlLista ? "aquamarine":"white" }} >{asd} </li>
                 )
             })}
         </ul>
