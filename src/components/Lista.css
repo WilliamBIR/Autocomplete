@@ -4,12 +4,7 @@ ul {
     text-align: left;
   }
   
-.Opciones{
+li{
     line-height: 1.5;
+    background-color: white;
   }
-.Opciones:hover{
-    background-color: aquamarine;
-}
-.Opciones:active{
-  background-color: aquamarine; 
-}

@@ -3,16 +3,16 @@ import React,{useState} from "react";
 
 
 export default function Lista({Peliculas}){
-    const[buscando,setVegetal]=useState('')
+    const[buscando,setBuscador]=useState('')
     const [Listafil,setLista]=useState([]);
     const [Alertafinal,setAlerta]=useState('');
     const[emoji,setEmoji]=useState('');
     const[Limite,setLimite]=useState(4);
-    const[ControlLista,setControl]=useState(0)
+    const[ControlLista,setControl]=useState(0);
 
     
     const handleInputChange= e =>{
-        setVegetal(e.target.value);
+        setBuscador(e.target.value);
         setAlerta('');     
         if(e.target.value.length===0){
             setLista([]);
@@ -54,7 +54,8 @@ export default function Lista({Peliculas}){
     }
 
     const Clickenopciones=tabla=>{
-        setVegetal(tabla);
+        setBuscador(tabla);
+        setControl(Listafil.indexOf(tabla))
     }
     const Cambiarlimite=(e)=>{
         setLimite(e.target.value)
@@ -105,15 +106,13 @@ export default function Lista({Peliculas}){
         else if(e.key==="Enter"){
             e.preventDefault();
             console.log("Enter presionado")
-            setVegetal(Listafil[ControlLista])
+            setBuscador(Listafil[ControlLista])
         }
     }
 
-
-
     return(
         <div>
-        <input name="buscando" type="search" placeholder="Search" onChange={handleInputChange}  onKeyUp={Teclapresionada}  value={buscando}></input>
+        <input name="buscando" type="search" placeholder="Search" onChange={handleInputChange}  onKeyDown={Teclapresionada}  value={buscando}></input>
         <select onChange={Cambiarlimite}>
             <option value={4}>4</option>
             <option value={5}>5</option>
@@ -127,7 +126,7 @@ export default function Lista({Peliculas}){
         <ul>
             {Listafil.map((asd,i)=>{
                 return(
-                    <li className='Opciones' key={asd}   onClick={()=>Clickenopciones(asd)} value={asd} style={{background: i===ControlLista ? "aquamarine":"white"}}>{asd} </li>
+                    <li key={asd}   onClick={()=>Clickenopciones(asd)} value={asd} style={{background: i===ControlLista ? "aquamarine":"white"}}>{asd} </li>
                 )
             })}
         </ul>

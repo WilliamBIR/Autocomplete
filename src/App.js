@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import Lista from "./components/Lista";
+import Usuario from './components/Usuario';
+
 
 
 function App(props) {
@@ -55,11 +57,19 @@ function App(props) {
       { "title": "The Silence of the Lambs", "rank": "23", "id": "tt0102926" },
       { "title": "The Usual Suspects", "rank": "26", "id": "tt0114814" }
   ]
-  
+    const Usuarios=[
+      {Nombre:"Skadi",Rango:"User"},
+      {Nombre:"Merlin",Rango:"User"},
+      {Nombre:"Reinnes",Rango:"Admin"},
+      {Nombre:"Tamamo",Rango:"User"},
+      {Nombre:"Castoria",Rango:"Admin"}
+
+    ]
     return(
     <div className="Todo">
         <h1 className="autot">Autocompletar</h1>
         <p>What movie you are searching?</p>
+        <Usuario Usuarios={Usuarios}/>
         <Lista Peliculas={Peliculas}/>
     </div>
 
