@@ -1,0 +1,15 @@
+ul {
+    font-size: 1rem;
+    list-style-type: none;
+    text-align: left;
+  }
+  
+.Opciones{
+    line-height: 1.5;
+  }
+.Opciones:hover{
+    background-color: aquamarine;
+}
+.Opciones:active{
+  background-color: aquamarine; 
+}
