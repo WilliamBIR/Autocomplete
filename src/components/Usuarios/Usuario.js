@@ -18,6 +18,9 @@ export default function Usuario({Usuarios}){
         }
         else{
             Acomodarlista(e.target.value)
+            setUser(e.target.value)
+            revisarrango(e.target.value)
+
         }
     }    
 
@@ -53,6 +56,9 @@ export default function Usuario({Usuarios}){
         Usuarios.map(Usuario=>{
             if(Usuario.Nombre===Uwu){
                 setRangoUsuario(Usuario.Rango)
+            }
+            else{
+                setRangoUsuario('NotFound')
             }
         })
     }

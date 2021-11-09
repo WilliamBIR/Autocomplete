@@ -80,10 +80,13 @@ export default function Lista({Peliculas}){
                     setAlerta('Movie Found, Title: '+Peli.title+' Rank: '+Peli.rank+' Id:'+Peli.id+' Calif: '+Peli.calif)
                     setEmoji('😎')
                     }
-                    else{
+                    else if(RangoUsuario==='User'){
                         setAlerta('Movie Found, Title: '+Peli.title+' Rank: '+Peli.rank+' Id:'+Peli.id)
                         setEmoji('😉')
-                            
+                    }
+                    else{
+                        setAlerta('User Not found')
+                        setEmoji('😢')
                     }
 
                     aux+=1;
@@ -91,7 +94,7 @@ export default function Lista({Peliculas}){
                 return(aux)
             })
             if(aux<1){
-                setAlerta('Not found')
+                setAlerta('Movie Not found')
                 setEmoji('😢')
             
             }
