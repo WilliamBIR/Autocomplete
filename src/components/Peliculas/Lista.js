@@ -62,7 +62,6 @@ export default function Lista({Peliculas}){
     }
     const Cambiarlimite=(e)=>{
         setLimite(e.target.value)
-
     }
 
     const Alertaalsubir=()=>{
@@ -107,17 +106,14 @@ export default function Lista({Peliculas}){
     
     const Teclapresionada=(e)=>{
         if(e.key==='ArrowDown' &&ControlLista<Limite-1){
-            console.log("Abajo presionado")
             setControl(prevControl =>prevControl+1)
             
         }
         else if(e.key==='ArrowUp' &&ControlLista>0){
-            console.log("Arriba presionado")
             setControl(prevControl =>prevControl-1)
         }
         else if(e.key==="Enter"){
             e.preventDefault();
-            console.log("Enter presionado")
             setBuscador(Listafil[ControlLista])
         }
     }

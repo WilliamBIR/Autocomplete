@@ -59,6 +59,9 @@ export default function Usuario({Usuarios}){
                 aux+=1;
                 setRangoUsuario(Usuario.Rango)
             }
+        return(
+            aux
+        )
 
         })
         if(aux===0){
@@ -80,7 +83,6 @@ export default function Usuario({Usuarios}){
         }
         else if(e.key==="Enter"){
             e.preventDefault();
-            console.log("Enter presionado")
             setUser(ListaUsers[ControlLista])
             revisarrango(ListaUsers[ControlLista])
         }
@@ -88,7 +90,7 @@ export default function Usuario({Usuarios}){
     
 
     document.addEventListener('click', function(event){
-        if(event.target.id!="Usuarios"){
+        if(event.target.id!=="Usuarios"){
             document.getElementById('ListaUs').style.display='none';
         }
         else{
