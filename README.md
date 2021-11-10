@@ -9,3 +9,5 @@ Lista de tareas:
 
 5. Añadir otro autocomplete para aprender
    usar Contexto                          :Ok
+
+Falta: Acomodar todo bien.

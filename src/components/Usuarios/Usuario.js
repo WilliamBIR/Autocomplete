@@ -52,15 +52,18 @@ export default function Usuario({Usuarios}){
 
 
     const revisarrango=Uwu=>{
+        var aux=0
         setRangoUsuario('User')
         Usuarios.map(Usuario=>{
             if(Usuario.Nombre===Uwu){
+                aux+=1;
                 setRangoUsuario(Usuario.Rango)
             }
-            else{
-                setRangoUsuario('NotFound')
-            }
+
         })
+        if(aux===0){
+            setRangoUsuario('NotFound')
+        }
     }
 
     const removeAccents = (str) => {

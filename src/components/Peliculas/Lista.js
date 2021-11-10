@@ -99,7 +99,6 @@ export default function Lista({Peliculas}){
             
             }
         }
-        console.log(RangoUsuario)
     }
 
     const removeAccents = (str) => {
@@ -130,8 +129,6 @@ export default function Lista({Peliculas}){
         else{
             document.getElementById('Lista').style.display='list-item';
         }
-        console.log(buscando)
-
     })
 
     return(
