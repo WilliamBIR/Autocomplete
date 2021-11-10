@@ -11,7 +11,9 @@ export default function Lista({Peliculas}){
     const[ControlLista,setControl]=useState(0);
     const[RangoUsuario,setRangoUsuario]=useContext(AppContext)
     
+    console.log(RangoUsuario)
     const handleInputChange= e =>{
+        console.log(RangoUsuario)
         setBuscador(e.target.value);
         setAlerta('');     
         if(e.target.value.length===0){
@@ -53,7 +55,7 @@ export default function Lista({Peliculas}){
             )                
         })
     }
-
+    
     const Clickenopciones=tabla=>{
         document.getElementById('Lista').style.display='none';
         setBuscador(tabla);
@@ -129,6 +131,7 @@ export default function Lista({Peliculas}){
 
     return(
         <div>
+        <p style={{display: "NotFound"===RangoUsuario ? "none":"block" }}>Pelicula:  
         <input id="Buscando" name="buscando" type="search" placeholder="Search" onChange={handleInputChange}  onKeyDown={Teclapresionada}  value={buscando}></input>
         <select onChange={Cambiarlimite}>
             <option value={4}>4</option>
@@ -139,7 +142,7 @@ export default function Lista({Peliculas}){
             
         </select>
         <button onClick={()=>Alertaalsubir()}>Buscar</button>
-
+        </p>
         <ul id="Lista">
             {Listafil.map((asd,i)=>{
                 return(

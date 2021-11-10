@@ -69,7 +69,7 @@ function App(props) {
     return(
     <div className="Todo">
         <h1 className="autot">Autocompletar</h1>
-        <p>What movie you are searching?</p>
+        <p className="pregunta">What movie you are searching?</p>
         <Provider>
         <Usuario Usuarios={Usuarios}/>
         <Lista Peliculas={Peliculas}/>

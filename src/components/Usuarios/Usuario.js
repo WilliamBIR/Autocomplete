@@ -7,11 +7,13 @@ export default function Usuario({Usuarios}){
     const[User,setUser]=useState('')
     const[ListaUsers,setListaUsers]=useState([])
     const[ControlLista,setControl]=useState(0)
+    const[Mensaje,setMensaje]=useState('')
     const[RangoUsuario,setRangoUsuario]=useContext(AppContext)
     const Limite=2
 
 
     const handleInputChange= e =>{
+        setMensaje('')
         setUser(e.target.value);
         if(e.target.value.length===0){
             setListaUsers([]);
@@ -19,10 +21,23 @@ export default function Usuario({Usuarios}){
         else{
             Acomodarlista(e.target.value)
             setUser(e.target.value)
-            revisarrango(e.target.value)
+            var aux=revisarrango(e.target.value)
+            if(aux===0){
+                setRangoUsuario('NotFound')
 
+            }
+            else{
+                Usuarios.map(Usuario=>{
+                    if(Usuario.Nombre===e.target.value){
+                        setRangoUsuario(Usuario.Rango)
+                        setMensaje('UserFound')
+                    }
+                })
+            }
         }
     }    
+
+
 
     const Acomodarlista=(Abuscar)=>{
         var aux=[]
@@ -42,10 +57,22 @@ export default function Usuario({Usuarios}){
     }
 
     const Clickenopciones=tabla=>{
+        setMensaje('')
         document.getElementById('ListaUs').style.display='none';
         setUser(tabla);
         setControl(ListaUsers.indexOf(tabla))
-        revisarrango(tabla)
+        var aux=revisarrango(tabla)
+        if(aux===0){
+            setRangoUsuario('NotFound')
+        }
+        else{
+            Usuarios.map(Usuario=>{
+                if(Usuario.Nombre===tabla){
+                    setRangoUsuario(Usuario.Rango)
+                    setMensaje('UserFound')
+                }
+            })
+        }
         Acomodarlista(tabla)
         
     }
@@ -53,20 +80,16 @@ export default function Usuario({Usuarios}){
 
     const revisarrango=Uwu=>{
         var aux=0
-        setRangoUsuario('User')
         Usuarios.map(Usuario=>{
             if(Usuario.Nombre===Uwu){
                 aux+=1;
-                setRangoUsuario(Usuario.Rango)
             }
         return(
             aux
         )
 
         })
-        if(aux===0){
-            setRangoUsuario('NotFound')
-        }
+        return(aux)
     }
 
     const removeAccents = (str) => {
@@ -82,9 +105,19 @@ export default function Usuario({Usuarios}){
             setControl(prevControl =>prevControl-1)
         }
         else if(e.key==="Enter"){
-            e.preventDefault();
             setUser(ListaUsers[ControlLista])
-            revisarrango(ListaUsers[ControlLista])
+            var aux=revisarrango(ListaUsers[ControlLista])
+            if(aux===0){
+                setRangoUsuario('NotFound')
+            }
+            else{
+                Usuarios.map(Usuario=>{
+                    if(Usuario.Nombre===ListaUsers[ControlLista]){
+                        setRangoUsuario(Usuario.Rango)
+                        setMensaje('UserFound')
+                    }
+                })
+            }
         }
     }
     
@@ -101,7 +134,10 @@ export default function Usuario({Usuarios}){
 
     return(
         <div>
+        <p>Usuario:
         <input id="Usuarios" name="usuarios" type="search" placeholder="Search" onChange={handleInputChange} onKeyDown={Teclapresionada}   value={User}></input>
+        {Mensaje}
+        </p>
         <ul id="ListaUs">
             {ListaUsers.map((asd,i)=>{
                 return(
