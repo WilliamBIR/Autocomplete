@@ -11,7 +11,7 @@ export default function Lista({Peliculas}){
     const[ControlLista,setControl]=useState(0);
     const[RangoUsuario,setRangoUsuario]=useContext(AppContext)
 
-    
+
     const handleInputChange= e =>{
         console.log(RangoUsuario)
         setBuscador(e.target.value);
@@ -151,7 +151,7 @@ export default function Lista({Peliculas}){
             })}
         </ul>
 
-        <p>{Alertafinal}
+        <p style={{display: "NotFound"===RangoUsuario ? "none":"block" }}>{Alertafinal}
         <span>{emoji}</span></p>
 
 
