@@ -1,35 +1,38 @@
-import './Usuario.css';
 import React,{useState,useContext} from "react";
 import {AppContext} from '../../application/provider';
 
 
-export default function Usuario({Usuarios}){
+export default function Noadmins({Usuarios}){
+    const[RangoUsuario,setRangoUsuario]=useContext(AppContext)
     const[User,setUser]=useState('')
     const[ListaUsers,setListaUsers]=useState([])
     const[ControlLista,setControl]=useState(0)
     const[Mensaje,setMensaje]=useState('')
-    const[RangoUsuario,setRangoUsuario]=useContext(AppContext)
+    var Normales=[]
+    Normales= Usuarios.map(Usuario=>{
+        if(Usuario.Rango==="User"){
+            Normales.push(Usuario);
+        }
+        return(Normales)
+    })
+
     const Limite=2
     const handleInputChange= e =>{                  
         setMensaje('')
         setUser(e.target.value);
         if(e.target.value.length===0){
             setListaUsers([]);
-            setRangoUsuario({...RangoUsuario,["Rango"]:'NotFound',["Alerta"]:' '})
-
         }
         else{
             Acomodarlista(e.target.value)
             setUser(e.target.value)
             var aux=revisarrango(e.target.value)
             if(aux===0){
-                setRangoUsuario({...RangoUsuario,["Rango"]:'NotFound',["Alerta"]:' '})
-
+                setMensaje('')
             }
             else{
                 Usuarios.map(Usuario=>{
                     if(Usuario.Nombre===e.target.value){
-                        setRangoUsuario({...RangoUsuario,["Rango"]:Usuario.Rango,["Alerta"]:' '})
                         setMensaje('UserFound')
                     }
                 })
@@ -37,14 +40,12 @@ export default function Usuario({Usuarios}){
         }
     }    
 
-
-
     const Acomodarlista=(Abuscar)=>{
         var aux=[]
         var aux2=0
         var otro=removeAccents(Abuscar.toLowerCase());
         Usuarios.map(Usuario=>{                   
-            if(removeAccents(Usuario.Nombre.toLowerCase()).includes(otro) ){
+            if(removeAccents(Usuario.Nombre.toLowerCase()).includes(otro) && Usuario.Rango==="User"){
                 if(aux2<Limite){    
                     aux2+=1;  
                     aux.push(Usuario.Nombre);
@@ -57,20 +58,17 @@ export default function Usuario({Usuarios}){
     }
 
     const Clickenopciones=tabla=>{
-        setRangoUsuario({...RangoUsuario,["Alerta"]:' '})
         setMensaje('')
-        document.getElementById('ListaUs').style.display='none';
+        document.getElementById('ListaNoAdmin').style.display='none';
         setUser(tabla);
         setControl(ListaUsers.indexOf(tabla))
         var aux=revisarrango(tabla)
         if(aux===0){
-            setRangoUsuario({...RangoUsuario,["Rango"]:'NotFound',["Alerta"]:' '})
-
+            setMensaje('')
         }
         else{
             Usuarios.map(Usuario=>{
                 if(Usuario.Nombre===tabla){
-                    setRangoUsuario({...RangoUsuario,["Rango"]:Usuario.Rango,["Alerta"]:' '})
                     setMensaje('UserFound')
                 }
             })
@@ -97,6 +95,7 @@ export default function Usuario({Usuarios}){
     const removeAccents = (str) => {
         return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       } 
+      
 
       const Teclapresionada=(e)=>{
         if(e.key==='ArrowDown' &&ControlLista<Limite-1){
@@ -107,16 +106,14 @@ export default function Usuario({Usuarios}){
             setControl(prevControl =>prevControl-1)
         }
         else if(e.key==="Enter"){
-            setRangoUsuario({...RangoUsuario,["Alerta"]:' '})
             setUser(ListaUsers[ControlLista])
             var aux=revisarrango(ListaUsers[ControlLista])
             if(aux===0){
-                setRangoUsuario({...RangoUsuario,["Rango"]:"NotFound",["Alerta"]:' '})
+                setMensaje('')
             }
             else{
                 Usuarios.map(Usuario=>{
                     if(Usuario.Nombre===ListaUsers[ControlLista]){
-                        setRangoUsuario({...RangoUsuario,["Rango"]:Usuario.Rango,["Alerta"]:' '})
                         setMensaje('UserFound')
                     }
                 })
@@ -126,28 +123,33 @@ export default function Usuario({Usuarios}){
     
 
     document.addEventListener('click', function(event){
-        if(event.target.id!=="Usuarios"){
-            document.getElementById('ListaUs').style.display='none';
+        if(event.target.id!=="Another"){
+            document.getElementById('ListaNoAdmin').style.display='none';
         }
         else{
-            document.getElementById('ListaUs').style.display='list-item';
+            document.getElementById('ListaNoAdmin').style.display='list-item';
         }
     })
 
 
+
+
+
+
     return(
         <div>
-        <p>Usuario:
-        <input id="Usuarios" name="usuarios" type="search" placeholder="Search" onChange={handleInputChange} onKeyDown={Teclapresionada}   value={User}></input>
+        <p style={{display: "Admin"===RangoUsuario.Rango ? "block":"none" }}>Buscar Usuario:
+        <input id="Another" name="usuarios" type="search" placeholder="Search" onChange={handleInputChange} onKeyDown={Teclapresionada}   value={User}></input>
         {Mensaje}
         </p>
-        <ul id="ListaUs">
+        <ul id="ListaNoAdmin">
             {ListaUsers.map((asd,i)=>{
                 return(
                     <li className='Opciones' key={asd} onClick={()=>Clickenopciones(asd)} value={asd}  style={{background: i===ControlLista ? "aquamarine":"white"}}>{asd} </li>
                 )
             })}
         </ul>
+
         </div>
     )
 }

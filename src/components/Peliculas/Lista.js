@@ -2,27 +2,23 @@ import './Lista.css';
 import React,{useState,useContext} from "react";
 import {AppContext} from '../../application/provider';
 
+
+
 export default function Lista({Peliculas}){
     const[buscando,setBuscador]=useState('')
     const [Listafil,setLista]=useState([]);
-    const [Alertafinal,setAlerta]=useState('');
-    const[emoji,setEmoji]=useState('');
     const[Limite,setLimite]=useState(4);
     const[ControlLista,setControl]=useState(0);
     const[RangoUsuario,setRangoUsuario]=useContext(AppContext)
 
-
     const handleInputChange= e =>{
         console.log(RangoUsuario)
         setBuscador(e.target.value);
-        setAlerta('');     
         if(e.target.value.length===0){
             setLista([]);
-            setEmoji('');
             setControl(1);
         }
         else{
-            setEmoji('🔍')
             setBuscador(e.target.value)
             Acomodarlista(e.target.value)
         }
@@ -68,26 +64,25 @@ export default function Lista({Peliculas}){
 
     const Alertaalsubir=()=>{
         var aux=0;
+        var aux2=' ';
         setLista([]);
         if(buscando.length===0){
-            setEmoji('🛠')
-            setAlerta('Sin texto para empezar a buscar');
+            setRangoUsuario({...RangoUsuario,["Alerta"]:'Sin texto para empezar a buscar'})
         }   
         else{ 
             Peliculas.map(Peli=>{
                 if(Peli.id===buscando ||Peli.title===buscando || Peli.rank===buscando){
-                    
-                    if(RangoUsuario==='Admin'){
-                    setAlerta('Movie Found, Title: '+Peli.title+' Rank: '+Peli.rank+' Id:'+Peli.id+' Calif: '+Peli.calif)
-                    setEmoji('😎')
+                    if(RangoUsuario.Rango==='Admin'){
+                    aux2='Movie Found, Title: '+Peli.title+' Rank: '+Peli.rank+' Id:'+Peli.id+' Calif: '+Peli.calif
+                        setRangoUsuario({...RangoUsuario,["Alerta"]:aux2})
                     }
-                    else if(RangoUsuario==='User'){
-                        setAlerta('Movie Found, Title: '+Peli.title+' Rank: '+Peli.rank+' Id:'+Peli.id)
-                        setEmoji('😉')
+                    else if(RangoUsuario.Rango==='User'){
+                        aux2='Movie Found, Title: '+Peli.title+' Rank: '+Peli.rank+' Id:'+Peli.id
+                        setRangoUsuario({...RangoUsuario,["Alerta"]:aux2})
                     }
                     else{
-                        setAlerta('User Not found')
-                        setEmoji('😢')
+                        aux2='User Not Found'
+                        setRangoUsuario({...RangoUsuario,["Alerta"]:aux2})
                     }
 
                     aux+=1;
@@ -95,9 +90,8 @@ export default function Lista({Peliculas}){
                 return(aux)
             })
             if(aux<1){
-                setAlerta('Movie Not found')
-                setEmoji('😢')
-            
+                aux2='Movie Not found'
+                setRangoUsuario({...RangoUsuario,["Alerta"]:aux2})
             }
         }
     }
@@ -131,7 +125,7 @@ export default function Lista({Peliculas}){
 
     return(
         <div>
-        <p style={{display: "NotFound"===RangoUsuario ? "none":"block" }}>Pelicula:  
+        <p style={{display: "NotFound"===RangoUsuario.Rango ? "none":"block" }}>Pelicula:  
         <input id="Buscando" name="buscando" type="search" placeholder="Search" onChange={handleInputChange}  onKeyDown={Teclapresionada}  value={buscando}></input>
         <select onChange={Cambiarlimite}>
             <option value={4}>4</option>
@@ -151,8 +145,7 @@ export default function Lista({Peliculas}){
             })}
         </ul>
 
-        <p style={{display: "NotFound"===RangoUsuario ? "none":"block" }}>{Alertafinal}
-        <span>{emoji}</span></p>
+        <p >{RangoUsuario.Alerta}</p>
 
 
         </div>

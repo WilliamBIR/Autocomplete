@@ -3,6 +3,7 @@ import './App.css';
 import Lista from "./components/Peliculas/Lista";
 import Usuario from './components/Usuarios/Usuario';
 import Provider from "./application/provider";
+import Noadmins from './components/Noadmins/Noadmins';
 
 
 
@@ -63,8 +64,18 @@ function App(props) {
       {Nombre:"Merlin",Rango:"User"},
       {Nombre:"Reinnes",Rango:"Admin"},
       {Nombre:"Tamamo",Rango:"User"},
-      {Nombre:"Castoria",Rango:"Admin"}
-
+      {Nombre:"Castoria",Rango:"Admin"},
+      {Nombre:"Nitocris",Rango:"User"},
+      {Nombre:"Da Vinci",Rango:"User"},
+      {Nombre:"First Hassan",Rango:"User"},
+      {Nombre:"Artoria",Rango:"User"},
+      {Nombre:"Valkirie",Rango:"User"},
+      {Nombre:"Astolfo",Rango:"User"},
+      {Nombre:"Mordred",Rango:"User"},
+      {Nombre:"Carmilla",Rango:"User"},
+      {Nombre:"Okita",Rango:"User"},
+      {Nombre:"Chloe",Rango:"User"},
+      {Nombre:"Shuten Douji",Rango:"User"}
     ]
     return(
     <div className="Todo">
@@ -72,6 +83,7 @@ function App(props) {
         <p className="pregunta">What movie you are searching?</p>
         <Provider>
         <Usuario Usuarios={Usuarios}/>
+        <Noadmins Usuarios={Usuarios}/>
         <Lista Peliculas={Peliculas}/>
         </Provider>
     </div>
