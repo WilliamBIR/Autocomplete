@@ -10,8 +10,8 @@ export default function Lista({Peliculas}){
     const[Limite,setLimite]=useState(4);
     const[ControlLista,setControl]=useState(0);
     const[RangoUsuario,setRangoUsuario]=useContext(AppContext)
+
     
-    console.log(RangoUsuario)
     const handleInputChange= e =>{
         console.log(RangoUsuario)
         setBuscador(e.target.value);
