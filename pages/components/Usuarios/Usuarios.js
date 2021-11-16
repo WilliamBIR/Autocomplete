@@ -34,11 +34,7 @@ export default function Usuarios(){
             document.getElementById('ListaUs').style.display='list-item';
             setUser(e.target.value)
             Acomodarlista(e.target.value)
-            misDatos.map(Usuario=>{
-                if(Usuario.title===e.target.value){
-                    setMensaje('UserFound')
-                    }
-                })
+            BuscaUsuario(e.target.value)
             }
         }
 
@@ -72,12 +68,8 @@ export default function Usuarios(){
             else if(e.key==="Enter"){
                 setControl(0)
                 setUser(ListaPeliculas[ControlLista])
-                document.getElementById('ListaUs').style.display='none';           
-                misDatos.map(Usuario=>{
-                    if(Usuario.title===ListaPeliculas[ControlLista]){
-                        setMensaje('UserFound')
-                    }
-                })
+                document.getElementById('ListaUs').style.display='none'; 
+                BuscaUsuario(ListaPeliculas[ControlLista])
             }
             }
     
@@ -86,17 +78,18 @@ export default function Usuarios(){
                 setMensaje('')
                 setUser(tabla);
                 setControl(ListaPeliculas.indexOf(tabla))
+                BuscaUsuario(tabla)
+                Acomodarlista(tabla)
+                setControl(0)
+            }
+        
+            const BuscaUsuario=NombreUsuario=>{
                 misDatos.map(Usuario=>{
-                    if(Usuario.title===tabla){
+                    if(Usuario.title===NombreUsuario){
                         setMensaje('UserFound')
                     }
                 })
-                Acomodarlista(tabla)
-                setControl(0)
-
             }
-        
-    
     
     return(
         <div>
