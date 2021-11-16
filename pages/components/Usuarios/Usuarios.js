@@ -5,7 +5,7 @@ import removeAccents from "../../api/removeAccents"
 
 
   const fetchmisDatosRequest = async()=>{
-    const response= await fetch('../../api/obtenerpeliculas')
+    const response= await fetch('../../api/obtenerusuarios')
     const data= await response.json()
     const {misDatos}=data;
     console.log('Base cargada')
@@ -15,7 +15,7 @@ import removeAccents from "../../api/removeAccents"
 export default function Usuarios(){
     const {data: misDatos}= useQuery(["misDatos"],fetchmisDatosRequest)
     const[User,setUser]=useState('')
-    const[ListaPeliculas,setPeliculas]=useState([])
+    const[ListaUsuarios,setUsuarios]=useState([])
     const[ControlLista,setControl]=useState(0)
     const[Mensaje,setMensaje]=useState('')
     const Limite=6
@@ -27,7 +27,7 @@ export default function Usuarios(){
         setUser(e.target.value);
         if(e.target.value.length===0){
             document.getElementById('ListaUs').style.display='none';
-            setPeliculas([]);
+            setUsuarios([]);
 
         }
         else{
@@ -43,14 +43,14 @@ export default function Usuarios(){
         var aux2=0
         var otro=removeAccents(Abuscar.toLowerCase());
         misDatos.map(Usuario=>{                   
-            if(removeAccents(Usuario.title.toLowerCase()).includes(otro) ){
+            if(removeAccents(Usuario.Nombre.toLowerCase()).includes(otro) ){
                 if(aux2<Limite){    
                     aux2+=1;  
-                    aux.push(Usuario.title);
+                    aux.push(Usuario.Nombre);
                     }
                 }
             return(
-                setPeliculas(aux)     
+                setUsuarios(aux)     
             )                
         })
         }
@@ -67,9 +67,9 @@ export default function Usuarios(){
             }
             else if(e.key==="Enter"){
                 setControl(0)
-                setUser(ListaPeliculas[ControlLista])
+                setUser(ListaUsuarios[ControlLista])
                 document.getElementById('ListaUs').style.display='none'; 
-                BuscaUsuario(ListaPeliculas[ControlLista])
+                BuscaUsuario(ListaUsuarios[ControlLista])
             }
             }
     
@@ -77,7 +77,7 @@ export default function Usuarios(){
                 document.getElementById('ListaUs').style.display='none';
                 setMensaje('')
                 setUser(tabla);
-                setControl(ListaPeliculas.indexOf(tabla))
+                setControl(ListaUsuarios.indexOf(tabla))
                 BuscaUsuario(tabla)
                 Acomodarlista(tabla)
                 setControl(0)
@@ -85,7 +85,7 @@ export default function Usuarios(){
         
             const BuscaUsuario=NombreUsuario=>{
                 misDatos.map(Usuario=>{
-                    if(Usuario.title===NombreUsuario){
+                    if(Usuario.Nombre===NombreUsuario){
                         setMensaje('UserFound')
                     }
                 })
@@ -93,19 +93,17 @@ export default function Usuarios(){
     
     return(
         <div>
-            <p>PRUEBA
+            <p>Usuario: 
             <input onChange={handleInputChange} onKeyDown={Teclapresionada}   value={User} id="Usuarios" name="usuarios" type="search" placeholder="Search" ></input>
             {Mensaje}</p>
             <ul id="ListaUs">
-            {ListaPeliculas.map((asd,i)=>{
+            {ListaUsuarios.map((asd,i)=>{
                 return(
                     <li className='Opciones' key={asd} onClick={()=>Clickenopciones(asd)} value={asd}   style={{background: i===ControlLista ? "aquamarine":"white"}}>{asd} </li>
                 )
             })}
             </ul>
 
-
-            <p>Prueba</p>
         </div>
     )
 }

@@ -5,7 +5,17 @@ import { PrismaClient } from '@prisma/client'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   const prisma = new PrismaClient()
-    const misDatos = await prisma.pelicula.findMany()
+    const misDatos = await prisma.usuario.findMany()
     res.json({misDatos})
 
   };
+
+/*
+findMany({
+      where:{
+        title:{
+          contains:'a',
+        },
+      },
+    })
+*/
