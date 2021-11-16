@@ -3,7 +3,13 @@ import Usuarios from './components/Usuarios/Usuarios';
 import Peliculas from './components/Peliculas/Lista';
 
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+   defaultOptions: {
+     queries: {
+       refetchOnWindowFocus: false,
+     },
+   },
+ })
 
 
 export default function Home() {
@@ -12,7 +18,7 @@ export default function Home() {
 
     <QueryClientProvider client={queryClient}>
       <Usuarios/> 
-      <Peliculas/>
+  
     </QueryClientProvider>
   )
 }
